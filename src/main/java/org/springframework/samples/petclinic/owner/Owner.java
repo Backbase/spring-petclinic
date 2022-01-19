@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +28,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
-
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.IndexedEmbedded;
 import org.springframework.beans.support.MutableSortDefinition;
 import org.springframework.beans.support.PropertyComparator;
 import org.springframework.core.style.ToStringCreator;
@@ -44,15 +45,18 @@ import org.springframework.samples.petclinic.model.Person;
  * @author Michael Isvy
  */
 @Entity
+@Indexed
 @Table(name = "owners")
 public class Owner extends Person {
 
 	@Column(name = "address")
 	@NotEmpty
+	@FullTextField
 	private String address;
 
 	@Column(name = "city")
 	@NotEmpty
+	@FullTextField
 	private String city;
 
 	@Column(name = "telephone")
@@ -61,6 +65,7 @@ public class Owner extends Person {
 	private String telephone;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "owner", fetch = FetchType.EAGER)
+	@IndexedEmbedded
 	private Set<Pet> pets;
 
 	public String getAddress() {

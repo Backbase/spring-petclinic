@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.owner;
 
+import java.util.Collection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -47,6 +48,10 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	@Transactional(readOnly = true)
 	Page<Owner> findByLastName(@Param("lastName") String lastName, Pageable pageable);
 
+	@Query("SELECT DISTINCT owner FROM Owner owner left join  owner.pets WHERE owner.lastName LIKE :lastName% ")
+	@Transactional(readOnly = true)
+	Collection<Owner> findByLastNameNoPag(@Param("lastName") String lastName);
+
 	/**
 	 * Retrieve an {@link Owner} from the data store by id.
 	 * @param id the id to search for
@@ -55,6 +60,10 @@ public interface OwnerRepository extends Repository<Owner, Integer> {
 	@Query("SELECT owner FROM Owner owner left join fetch owner.pets WHERE owner.id =:id")
 	@Transactional(readOnly = true)
 	Owner findById(@Param("id") Integer id);
+
+	@Query("SELECT DISTINCT owner FROM Owner owner left join fetch owner.pets WHERE owner.id IN :ids")
+	@Transactional(readOnly = true)
+	Collection<Owner> findByIds(@Param("ids") Collection<Integer> ids);
 
 	/**
 	 * Save an {@link Owner} to the data store, either inserting or updating it.

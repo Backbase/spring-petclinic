@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 
 /**
  * Simple JavaBean domain object adds a name property to <code>BaseEntity</code>. Used as
@@ -29,6 +30,7 @@ import javax.persistence.MappedSuperclass;
 public class NamedEntity extends BaseEntity {
 
 	@Column(name = "name")
+	@FullTextField
 	private String name;
 
 	public String getName() {

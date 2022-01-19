@@ -18,6 +18,7 @@ package org.springframework.samples.petclinic.model;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotEmpty;
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.FullTextField;
 
 /**
  * Simple JavaBean domain object representing an person.
@@ -29,10 +30,12 @@ public class Person extends BaseEntity {
 
 	@Column(name = "first_name")
 	@NotEmpty
+	@FullTextField
 	private String firstName;
 
 	@Column(name = "last_name")
 	@NotEmpty
+	@FullTextField
 	private String lastName;
 
 	public String getFirstName() {

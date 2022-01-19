@@ -15,6 +15,7 @@
  */
 package org.springframework.samples.petclinic.visit;
 
+import org.hibernate.search.mapper.pojo.mapping.definition.annotation.Indexed;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.BaseEntity;
 
@@ -31,6 +32,7 @@ import java.time.LocalDate;
  * @author Dave Syer
  */
 @Entity
+@Indexed
 @Table(name = "visits")
 public class Visit extends BaseEntity {
 
