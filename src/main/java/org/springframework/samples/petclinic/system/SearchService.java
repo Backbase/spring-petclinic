@@ -21,15 +21,15 @@ public class SearchService {
 	public List<Owner> search(String query) {
 		SearchSession searchSession = Search.session(entityManager);
 
-//		SearchResult<Owner> result = searchSession.search(Owner.class)
-//				.where(f -> f.match().fields("firstName", "lastName", "pets.name").matching(query)).fetch(20);
-//
-//		long totalHitCount = result.total().hitCount();
-//		List<Owner> hits = result.hits();
+		// SearchResult<Owner> result = searchSession.search(Owner.class)
+		// .where(f -> f.match().fields("firstName", "lastName",
+		// "pets.name").matching(query)).fetch(20);
+		//
+		// long totalHitCount = result.total().hitCount();
+		// List<Owner> hits = result.hits();
 
-		List<Owner> hits2 = searchSession.search(Owner.class).where(
-				f -> query == null || query.trim().isEmpty() ?
-					f.matchAll() : f.match().fields("firstName", "lastName", "pets.name").matching(query).fuzzy())
+		List<Owner> hits2 = searchSession.search(Owner.class).where(f -> query == null || query.trim().isEmpty()
+				? f.matchAll() : f.match().fields("firstName", "lastName", "pets.name").matching(query).fuzzy())
 				.fetchHits(20);
 
 		return hits2;

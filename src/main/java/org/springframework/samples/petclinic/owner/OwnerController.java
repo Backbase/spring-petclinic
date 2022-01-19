@@ -108,7 +108,6 @@ class OwnerController {
 			results = this.owners.findByLastNameNoPag(searchForm.getQuery());
 		}
 
-
 		if (results.isEmpty()) {
 			// no owners found
 			result.rejectValue("query", "notFound", "not found");
